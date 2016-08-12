@@ -1,0 +1,122 @@
+<div ng-controller='SearchOrderCtrl'>
+  <div class = 'slds'>
+    <div class="slds-notify_container" ng-show='error'>
+        <div class="slds-notify slds-theme--error slds-theme--alert-texture" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <h2 class="slds-text-heading--small">{{error}}</h2>
+        </div>
+    </div>
+    <div class="slds-notify_container" ng-show='warning'>
+        <div class="slds-notify slds-theme--warning slds-theme--alert-texture" role="alert">
+            <span class="slds-assistive-text">Warning</span>
+            <h2 class="slds-text-heading--small">{{warning}}</h2>
+        </div>
+    </div>
+    <div class="slds-form-element">
+      <h1>Search your order</h1>
+      <form ng-submit="searchByPiid(orderNumber)" name="piidForm">
+          <h2  class="slds-text-heading--medium slds-truncate">Search By Order Number</h2>
+          <label for="processId" class="slds-form-element__label">Order Number</label>
+          <input type="number" ng-model="orderNumber" class="slds-input" placeholder="Please Enter Process Id to Search">
+          <md-button type="submit" class='slds-button'>Search By Number</md-button>
+      </form>
+      <table ng-if="taskResult.currentStep" class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+        <thead>
+          <tr class="slds-text-heading--label">
+            <th>
+              <div class="slds-truncate" title="Order Id">
+                Order Id
+              </div>
+            </th>
+            <th>
+              <div class="slds-truncate" title="Order Amount">
+                Order Amount
+              </div>
+            </th>
+            <th>
+              <div class="slds-truncate" title="Assigned To">
+                Assigned To
+              </div>
+            </th>
+            <th>
+              <div class="slds-truncate" title="Current Task ID">
+                Current Task ID
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="slds-hint-parent">
+            <td data-label="Claim Id">
+              <div class="slds-truncate">{{taskResult.currentTask.piid}}</div>
+            </td>
+            <td data-label="Claim Amount">
+              <div class="slds-truncate">{{taskResult.currentTask.data.variables.currentOrder.totalCost}}</div>
+            </td>
+            <td data-label="Assigned To">
+              <div class="slds-truncate">{{taskResult.currentTask.assignedToDisplayName}}</div>
+            </td>
+            <td data-label="Current Task ID">
+              <div class="slds-truncate">{{taskResult.currentTask.tkiid}}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr>
+    <div class="slds-form-element">
+      <form ng-submit="searchByAttribute()" name="attrForm">
+        <h2  class="slds-text-heading--medium slds-truncate">Search By Account</h2>
+        <div class="slds-grid slds-wrap slds-grid--pull-padded">
+          <div class="slds-col--padded slds-size--1-of-3 slds-medium-size--1-of-3 slds-large-size--1-of-3">
+            <label for="accountName" class="slds-form-element__label">Account Name</label>
+            <input name="accountName" type="text" ng-model="attr.customerName" class="slds-input" placeholder="Account Name">
+          </div>
+        </div>
+        <md-button type="submit" class='slds-button'>Complex Search</md-button>
+      </form>
+
+      <table ng-if="attrResults" class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal">
+        <thead>
+          <tr class="slds-text-heading--label">
+            <th>
+              <div class="slds-truncate" title="Order Id">
+                Order Id
+              </div>
+            </th>
+            <th>
+              <div class="slds-truncate" title="Order Status">
+                Order Status
+              </div>
+            </th>
+            <th>
+              <div class="slds-truncate" title="Description">
+                Description
+              </div>
+            </th>
+            <th>
+              <div class="slds-truncate" title="Cost">
+                Cost
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="slds-hint-parent" ng-repeat="result in attrResults">
+            <td data-label="Order Id">
+              <div class="slds-truncate">{{result.instanceId}}</div>
+            </td>
+            <td data-label="Order Status">
+              <div class="slds-truncate">{{result.instanceStatus}}</div>
+            </td>
+            <td data-label="Description">
+              <div class="slds-truncate">{{result.taskDetails.currentOrder.description}}</div>
+            </td>
+            <td data-label="Cost">
+              <div class="slds-truncate">{{result.taskDetails.currentOrder.totalCost | currency}}</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,148 @@
+<div ng-controller='CreateOrderCtrl'>
+  <div class = 'slds'>
+    <div class="slds-notify_container" ng-show='error'>
+        <div class="slds-notify slds-theme--error slds-theme--alert-texture" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <h2 class="slds-text-heading--small">{{error}}</h2>
+        </div>
+    </div>
+    <div class="slds-notify_container" ng-show='warning'>
+        <div class="slds-notify slds-theme--warning slds-theme--alert-texture" role="alert">
+            <span class="slds-assistive-text">Warning</span>
+            <h2 class="slds-text-heading--small">{{warning}}</h2>
+        </div>
+    </div>
+    <div class="slds-form-element">
+        <h1>Order Creation Form</h1>
+      
+          <h2  class="slds-text-heading--medium slds-truncate" ng-show='appLoadedFrom !== "browser"'>Create Order For {{currentCustomer.customerName}}</h2>
+          <div class="slds-grid slds-wrap slds-grid--pull-padded">
+            <div class="slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" ng-show='appLoadedFrom === "browser"'>
+              <label for="customerName" class="slds-form-element__label">Customer Name</label>
+              <input name="customerName" type="text" ng-model="currentCustomer.customerName" class="slds-input" placeholder="For which customer are you ordering">
+            </div>
+            <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+              <label for="orderedBy" class="slds-form-element__label">Ordered By</label>
+              <input name="orderedBy" type="text" ng-model="currentOrder.orderedBy" class="slds-input" placeholder="Who is ordering">
+            </div>
+            <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+              <label for="submittedBy" class="slds-form-element__label">Submitted By</label>
+              <input name="submittedBy" type="text" ng-model="currentOrder.submittedBy" class="slds-input" placeholder="Your Name">
+            </div>
+            <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+              <h2>Billing Address</h2>
+              <div class="slds-form--horizontal">
+                <div class="slds-form-element">
+                  <label class="slds-form-element__label" for="billingStreet">Street: </label>
+                  <div class="slds-form-element__control">
+                    <input id="billingStreet" class="slds-input" type="text" ng-model="currentCustomer.billingAddress.streetAddress" />
+                  </div>
+                  <label class="slds-form-element__label" for="billingCity">City: </label>
+                  <div class="slds-form-element__control">
+                    <input id="billingCity" class="slds-input" type="text" ng-model="currentCustomer.billingAddress.city" />
+                  </div>
+                  <label class="slds-form-element__label" for="billingState">State: </label>
+                  <div class="slds-form-element__control">
+                    <input id="billingState" class="slds-input" type="text" ng-model="currentCustomer.billingAddress.state" />
+                  </div>
+                  <label class="slds-form-element__label" for="billingzip">Zip: </label>
+                  <div class="slds-form-element__control">
+                    <input id="billingzip" class="slds-input" type="text" ng-model="currentCustomer.billingAddress.postalCode" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="slds-col--padded slds-size--1-of-2 slds-medium-size--1-of-2 slds-large-size--1-of-2">
+              <h2>Shipping Address</h2>
+              <div class="slds-form--horizontal">
+                <div class="slds-form-element">
+                  <label class="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
+                    <span class="slds-form-element__label slds-m-bottom--none">Same as Billing</span>
+                    <input name="checkbox" type="checkbox" ng-model="sameAddress" ng-change="sameAddress && updateAddress()"/>
+                    <span class="slds-checkbox--faux" data-check-on="On" data-check-off="Off"></span>
+                  </label>
+                  <label class="slds-form-element__label" for="shippingStreet">Street: </label>
+                  <div class="slds-form-element__control">
+                    <input id="shippingStreet" class="slds-input" type="text" ng-model="currentOrder.shippingAddress.streetAddress" />
+                  </div>
+                  <label class="slds-form-element__label" for="shippingCity">City: </label>
+                  <div class="slds-form-element__control">
+                    <input id="shippingCity" class="slds-input" type="text" ng-model="currentOrder.shippingAddress.city" />
+                  </div>
+                  <label class="slds-form-element__label" for="shippingState">State: </label>
+                  <div class="slds-form-element__control">
+                    <input id="shippingState" class="slds-input" type="text" ng-model="currentOrder.shippingAddress.state" />
+                  </div>
+                  <label class="slds-form-element__label" for="shippingzip">Zip: </label>
+                  <div class="slds-form-element__control">
+                    <input id="shippingzip" class="slds-input" type="text" ng-model="currentOrder.shippingAddress.postalCode" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h2  class="slds-text-heading--medium slds-truncate">Order Info</h2>
+
+
+          <button class='slds-button' ng-click='addItem()'>Add Items</button>
+          <form ng-submit="sendOrder()" name="createOrderForm">
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+              <thead>
+                <tr class="slds-text-heading--label">
+                  <th scope="col">
+                    <div class="slds-truncate" title="Description">Description</div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate" title="Qty">Qty</div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate" title="Cost">Cost</div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate" title="Total">Item Total</div>
+                  </th>
+                  <th scope="col">
+                    <div class="slds-truncate" title="Detele Row"></div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng:repeat="item in invoice.items">
+                  <td data-label="Description">
+                    <input type="text" ng:model="item.description" />
+                  </td>
+                  <td data-label="Qty">
+                    <input type="number" ng:model="item.qty" ng:required />
+                  </td>
+                  <td data-label="Cost">
+                    <input type="number" ng:model="item.cost" ng:required>
+                  </td>
+                  <td data-label="Total">
+                    {{item.qty * item.cost | currency}}
+                  </td>
+                  <td data-label="Amount">
+                    [<a href ng:click="removeItem($index)">X</a>]
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan='3'>
+                    {{description()}}
+                  </td>
+                  <td>Order Total: {{total() | currency}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <button class='slds-button'>Submit Order</button>
+        </form>
+        <ul class="slds-has-dividers--around-space" ng-if="recentOrderId">
+            <li class="slds-item">
+                <div class="slds-tile slds-tile--board">
+                    <h3 class="slds-truncate" title="Anypoint Connectors">
+                        Your Order Number is: <a href="javascript:void(0);">{{recentOrderId}}</a>
+                    </h3>
+                </div>
+            </li>
+        </ul>
+    </div>
+  </div>
+</div>

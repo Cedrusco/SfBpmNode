@@ -1,0 +1,47 @@
+{
+  "name": "NodejsStarterApp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "@salesforce-ux/design-system": "^2.0.3",
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-material": "^1.1.0-rc.5",
+    "angular-ui-router": "^0.3.1",
+    "body-parser": "^1.15.2",
+    "cfenv": "1.0.x",
+    "cookie-parser": "^1.4.3",
+    "crypto": "0.0.3",
+    "ejs": "^2.5.1",
+    "express": "4.13.x",
+    "express-session": "^1.14.0",
+    "morgan": "^1.7.0",
+    "postal": "^2.0.4",
+    "qs": "^6.2.1",
+    "request": "^2.74.0",
+    "request-promise": "^4.0.2"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-develop": "^0.4.0",
+    "grunt-ng-annotate": "^2.0.2",
+    "grunt-npm-install": "^0.3.0",
+    "jshint-stylish": "^2.2.0",
+    "load-grunt-tasks": "^3.5.0",
+    "time-grunt": "^1.4.0"
+  },
+  "repository": {},
+  "engines": {
+    "node": "4.x"
+  }
+}

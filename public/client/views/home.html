@@ -1,0 +1,9 @@
+Welcome To Your Headless BPM App!
+
+Click your Process to get started
+
+<div ng-controller='HomeCtrl'>
+	<div ng-repeat='process in processes'>
+	    <h2><a ui-sref='createOrder'>{{process.display}}</a></h2>
+	</div>
+</div>
