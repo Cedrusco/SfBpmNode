@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "grunt"
   },
   "dependencies": {
     "@salesforce-ux/design-system": "^2.0.3",
